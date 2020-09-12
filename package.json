@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "crypto-random-string": "^3.3.0",
+    "dayjs": "^1.8.35",
     "lodash": "^4.17.20",
     "lowdb": "^1.0.0",
     "vue": "^2.6.11",

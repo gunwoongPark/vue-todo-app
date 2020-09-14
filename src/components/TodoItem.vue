@@ -95,7 +95,7 @@ export default {
     },
 
     deleteTodo() {
-      this.$$emit("delete-todo", this.todo);
+      this.$emit("delete-todo", this.todo);
     },
   },
 };

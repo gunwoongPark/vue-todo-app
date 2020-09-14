@@ -165,25 +165,6 @@ export default {
     },
 
     clearCompleted() {
-      // 배열을 앞에서부터 지우는 native 한 방법 (X)
-      // this.todos.forEach((todo) => {
-      //   if (todo.done) {
-      //     this.deleteTodo(todo);
-      //   }
-      // });
-      // 배열을 뒤에서부터 지우는 native 한 방법 (O)
-      // this.todos
-      //   .reduce((list, todo, index) => {
-      //     if (todo.done) {
-      //       list.push(index);
-      //     }
-      //     return list;
-      //   }, [])
-      //   .reverse()
-      //   .forEach((index) => {
-      //     this.deleteTodo(this.todos[index]);
-      //   });
-
       _forEachRight(this.todos, (todo) => {
         if (todo.done) {
           this.deleteTodo(todo);
@@ -194,8 +175,6 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-button.active {
-  font-weight: bold;
-}
+<style lang="scss">
+@import "../../scss/style";
 </style>

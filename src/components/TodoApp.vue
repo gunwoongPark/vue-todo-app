@@ -14,8 +14,12 @@
       </div>
 
       <div class="actions">
-        <input v-model="allDone" type="checkbox" />
-        <button @click="clearCompleted">완료된 항목 삭제</button>
+        <div class="float--left">
+          <input v-model="allDone" type="checkbox" />
+        </div>
+        <div class="float--right">
+          <button @click="clearCompleted">완료된 항목 삭제</button>
+        </div>
       </div>
     </div>
 

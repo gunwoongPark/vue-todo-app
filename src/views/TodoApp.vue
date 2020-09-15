@@ -78,7 +78,7 @@ export default {
 
   computed: {
     filteredTodos() {
-      switch (this.filter) {
+      switch (this.$route.params.id) {
         case "all":
         default:
           return this.todos;

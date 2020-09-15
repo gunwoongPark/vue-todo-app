@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Home from '../src/views/Home.vue'
-import About from '../src/views/About.vue'
+import Home from '../src/views/Home'
+import About from '../src/views/About'
 import TodoApp from '../src/views/TodoApp'
 
 Vue.use(VueRouter)
@@ -10,16 +10,25 @@ Vue.use(VueRouter)
 const routes = [
     // config
     {
+        name: 'index',
         path: '/',
         component: Home
     },
     {
+        name: 'about',
         path: '/about',
         component: About
     },
     {
+        name: 'todos',
         path: '/todos',
-        component: TodoApp
+        component: TodoApp,
+        children: [
+            {
+                name: 'todos-filter',
+                path: ':id'
+            }
+        ]
     }
 ]
 

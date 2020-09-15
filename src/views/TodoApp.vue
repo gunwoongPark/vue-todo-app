@@ -2,15 +2,9 @@
   <div class="todo-app">
     <div class="todo-app__actions">
       <div class="filters">
-        <button :class="{active:filter === 'all'}" @click="changeFilter('all')">모든 항목 ({{total}})</button>
-        <button
-          :class="{active:filter ==='active'}"
-          @click="changeFilter('active')"
-        >해야 할 항목 ({{activeCount}})</button>
-        <button
-          :class="{active: filter === 'completed'}"
-          @click="changeFilter('completed')"
-        >완료된 항목 ({{completedCount}})</button>
+        <router-link to="all" tag="button">모든 항목 ({{total}})</router-link>
+        <router-link to="active" tag="button">해야 할 항목 ({{activeCount}})</router-link>
+        <router-link to="completed" tag="button">완료된 항목 ({{completedCount}})</router-link>
       </div>
 
       <div class="actions clearfix">
@@ -72,7 +66,6 @@ export default {
     return {
       db: null,
       todos: [],
-      filter: "all",
     };
   },
 
@@ -163,10 +156,6 @@ export default {
       this.$delete(this.todos, foundIndex);
     },
 
-    changeFilter(filter) {
-      this.filter = filter;
-    },
-
     completeAll(checked) {
       // DB 갱신
       this.db
@@ -207,4 +196,9 @@ export default {
 
 <style lang="scss">
 @import "../../scss/style";
+
+.filters button.router-link-active {
+  background: royalblue;
+  color: white;
+}
 </style>

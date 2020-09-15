@@ -22,6 +22,8 @@ const routes = [
     {
         name: 'todos',
         path: '/todos',
+        // 특정 페이지에서 보여줄게 없을경우 redirect 속성에 적힌 url 로 다시 보낸다.
+        redirect: '/todos/all',
         component: TodoApp,
         children: [
             {

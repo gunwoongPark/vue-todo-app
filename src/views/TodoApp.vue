@@ -91,21 +91,6 @@ export default {
     console.log(typeof this.db);
   },
   methods: {
-    createTodo(newTitle) {
-      const newTodo = {
-        id: cryptoRandomString({ length: 10 }),
-        title: newTitle,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        done: false,
-      };
-
-      // Create DB
-      this.db.get("todos").push(newTodo).write();
-
-      // Create Client
-      this.todos.push(newTodo);
-    },
     updateTodo(todo, value) {
       // Update DB
       this.db.get("todos").find({ id: todo.id }).assign(value).write();

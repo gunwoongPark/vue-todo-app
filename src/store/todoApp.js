@@ -14,7 +14,7 @@ export default {
         activeCount(state) {
             return state.todos.filter((todo) => !todo.done).length;
         },
-        completedCount(state, getters) {
+        completedCount(getters) {
             return getters.total - getters.activeCount;
         },
     },
@@ -24,9 +24,16 @@ export default {
         assignDB(state, db) {
             state.db = db
         },
+        createDB(state, newTodo) {
+            state.db.get("todos").push(newTodo).write();
+        },
         assignTodos(state, todos) {
             state.todos = todos
+        },
+        pushTodo(state, newTodo) {
+            state.todos.push(newTodo)
         }
+
     },
     // Methods
     // 일반 로직(비동기O)
@@ -34,13 +41,11 @@ export default {
         // context 를 거쳐서 state 및 commit 에 접근 가능
         initDB({ state, commit }) {
             const adapter = new LocalStorage("todo-app");
-            // state.db = lowdb(adapter);
             commit('assignDB', lowdb(adapter))
 
             const hasTodos = state.db.has("todos").value();
 
             if (hasTodos) {
-                // state.todos = _cloneDeep(state.db.getState().todos);
                 commit('assignTodos', _cloneDeep(state.db.getState().todos))
             } else {
                 // Local DB 초기화
@@ -50,6 +55,21 @@ export default {
                     })
                     .write();
             }
+        },
+        createTodo({ state, commit }, newTitle) {
+            const newTodo = {
+                id: cryptoRandomString({ length: 10 }),
+                title: newTitle,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                done: false,
+            };
+
+            // Create DB
+            commit('createDB', newTodo)
+
+            // Create Client
+            commit('pushTodo', newTodo)
         },
     }
 }

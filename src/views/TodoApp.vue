@@ -45,9 +45,6 @@
 </template>
 
 <script>
-import _cloneDeep from "lodash/cloneDeep";
-import _findIndex from "lodash/findIndex";
-import _forEachRight from "lodash/forEachRight";
 import scrollTo from "scroll-to";
 import TodoCreator from "../components/TodoCreator";
 import TodoItem from "../components/TodoItem";
@@ -87,38 +84,6 @@ export default {
     this.$store.dispatch("todoApp/updateTodo", { todo, value });
   },
   methods: {
-    deleteTodo(todo) {
-      // Delete DB
-      this.db.get("todos").remove({ id: todo.id }).write();
-
-      // Delete Client
-      const foundIndex = _findIndex(this.todos, { id: todo.id });
-      this.$delete(this.todos, foundIndex);
-    },
-
-    completeAll(checked) {
-      // DB 갱신
-      this.db
-        .get("todos")
-        .forEach((todo) => {
-          todo.done = checked;
-        })
-        .write();
-
-      // Local todos 갱신
-      this.todos.forEach((todo) => {
-        todo.done = checked;
-      });
-    },
-
-    clearCompleted() {
-      _forEachRight(this.todos, (todo) => {
-        if (todo.done) {
-          this.deleteTodo(todo);
-        }
-      });
-    },
-
     scrollToTop() {
       scrollTo(0, 0, {
         ease: "linear",

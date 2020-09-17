@@ -53,19 +53,12 @@ export default {
   computed: {
     // Helpers
     ...mapState("todoApp", ["todos"]),
-    ...mapGetters("todoApp", ["total", "activeCount", "completedCount"]),
-
-    filteredTodos() {
-      switch (this.$route.params.id) {
-        case "all":
-        default:
-          return this.todos;
-        case "active": // 해야 할 항목
-          return this.todos.filter((todo) => !todo.done);
-        case "completed": // 완료된 항목
-          return this.todos.filter((todo) => todo.done);
-      }
-    },
+    ...mapGetters("todoApp", [
+      "filteredTodos",
+      "total",
+      "activeCount",
+      "completedCount",
+    ]),
 
     allDone: {
       get() {
@@ -77,11 +70,18 @@ export default {
     },
   },
 
+  watch: {
+    $route() {
+      this.updateFilter(this.$route.params.id);
+    },
+  },
+
   created() {
     this.initDB();
   },
 
   methods: {
+    ...mapMutations("todoApp", ["updateFilter"]),
     ...mapActions("todoApp", ["initDB", "completeAll", "clearCompleted"]),
 
     scrollToTop() {

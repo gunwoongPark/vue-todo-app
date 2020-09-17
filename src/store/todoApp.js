@@ -31,12 +31,15 @@ export default {
             }
         },
         total(state) {
+
             return state.todos.length;
         },
         activeCount(state) {
             return state.todos.filter((todo) => !todo.done).length;
         },
-        completedCount(getters) {
+        // state를 사용하지 않더라도 순서 때문에 state를 추가해줄것~!
+        completedCount(state, getters) {
+            console.log(state)
             return getters.total - getters.activeCount;
         },
     },
@@ -96,6 +99,7 @@ export default {
             }
         },
         createTodo({ state, commit }, newTitle) {
+            console.log(state);
             const newTodo = {
                 id: cryptoRandomString({ length: 10 }),
                 title: newTitle,
@@ -138,7 +142,7 @@ export default {
                 .write();
 
             // Local todos 갱신
-            state.todos = _cloneDeep(newTodos)
+            commit('assignTodos', _cloneDeep(newTodos))
         },
         clearCompleted({ state, dispatch }) {
             _forEachRight(state.todos, (todo) => {
